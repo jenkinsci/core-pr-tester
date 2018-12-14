@@ -9,7 +9,7 @@ Lets you test a pull-request on the Jenkins project in a clean environment.
 * Pass that number to the Docker container:
 
 ```shell
-$ docker run -ti -p 8080:8080 -e ID=2200 batmat/jenkins-pr-tester
+$ docker run --rm -ti -p 8080:8080 -e ID=2200 batmat/jenkins-pr-tester
 ```
 
 * Open your browser on http://localhost:8080 and test
