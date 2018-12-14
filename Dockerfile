@@ -1,20 +1,20 @@
-FROM java:8
+FROM openjdk:8-jdk
 MAINTAINER Baptiste Mathus <batmat@batmat.net>
 
-RUN wget http://apache.mindstudios.com/maven/maven-3/3.3.9/binaries/apache-maven-3.3.9-bin.zip && \
-    unzip apache-maven-3.3.9-bin.zip && \
-    rm apache-maven-3.3.9-bin.zip
-ENV PATH /apache-maven-3.3.9/bin:$PATH
+ARG MAVEN_VERSION=3.6.0
+RUN curl -Lf http://central.maven.org/maven2/org/apache/maven/apache-maven/$MAVEN_VERSION/apache-maven-$MAVEN_VERSION-bin.tar.gz | tar -C /opt -xzv
+ENV M2_HOME /opt/apache-maven-$MAVEN_VERSION
+ENV maven.home $M2_HOME
+ENV M2 $M2_HOME/bin
+ENV PATH $M2:$PATH
 
 RUN apt-get install -y \
                          git && \
     apt-get clean
 
-# Cloning + "warming" up the maven local cache/repository for 1.x and 2.x
+# Cloning + "warming" up the maven local cache/repository for the latest Jenkins version
 RUN git clone https://github.com/jenkinsci/jenkins &&\
     cd jenkins && \
-    mvn clean package -DskipTests dependency:go-offline && \
-    git checkout 2.0 && \
     mvn clean package -DskipTests dependency:go-offline && \
     mvn clean
 
