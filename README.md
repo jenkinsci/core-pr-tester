@@ -12,6 +12,18 @@ Lets you test a pull-request on the Jenkins project in a clean environment.
 $ docker run --rm -ti -p 8080:8080 -e ID=2200 jenkins/core-pr-tester
 ```
 
+### How to merge with `master` branch
+
+An additional environment variable `MERGE_WITH=` can be passed to merge the PR with any existing branch from the repository, before starting the build.
+
+NOTE: the merge **must** not have conflict, or the whole execution will fail and stop.
+
+Example:
+```shell
+$ docker run --rm -ti -p 8080:8080 -e ID=2200 -e MERGE_WITH=master jenkins/core-pr-tester
+```
+
+
 * Open your browser on http://localhost:8080 and test
 
 ## Misc
