@@ -31,4 +31,8 @@ RUN chmod +x /checkout-and-start.sh
 
 EXPOSE 8080
 
+
+RUN  git config --global user.email "core-pr-tester-noreply@jenkins.io" && \
+     git config --global user.name "Core PR Tester"
+
 ENTRYPOINT ["/bin/tini", "--", "/checkout-and-start.sh"]
