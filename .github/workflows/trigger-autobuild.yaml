@@ -1,0 +1,19 @@
+on:
+  schedule:
+    # * is a special character in YAML so you have to quote this string
+    - cron:  '0 0 * * Tue'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - name: Commit files
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "github-actions"
+        git commit --allow-empty -m "Weekly update to trigger autobuild on dockerhub"
+    - name: Push changes
+      uses: ad-m/github-push-action@master
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
