@@ -15,7 +15,7 @@ RUN apt-get install -y \
 # Cloning + "warming" up the maven local cache/repository for the latest Jenkins version
 RUN git clone https://github.com/jenkinsci/jenkins &&\
     cd jenkins && \
-    mvn clean package -DskipTests dependency:go-offline && \
+    mvn clean package -DskipTests && \
     mvn clean
 
 WORKDIR jenkins
