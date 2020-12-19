@@ -5,16 +5,48 @@ properties([[$class: 'BuildDiscarderProperty',
 def testedImageName='jenkins/core-pr-tester-pr'
 
 timeout(time: 30, unit: 'MINUTES') {
-    node('docker') {
-        stage('Checkout') {
+    node('arm64docker') {
+        stage('Checkout ARM') {
             checkout scm
         }
 
-        stage('Build') {
-            sh "docker build -t $testedImageName ."
+        stage('Build ARM') {
+            sh """
+            export DOCKER_CLI_EXPERIMENTAL="enabled"
+            docker --version
+
+            docker buildx create --use
+            docker buildx build --load --tag $testedImageName --platform linux/arm64/v8 .
+            """
         }
 
-        stage('Test image: standard use') {
+        stage('Test image: standard use ARM') {
+            sh "docker run --rm -e ID=2831 -p 8080:8080 -e DO_BUILD=no $testedImageName"
+        }
+
+
+
+    }
+
+    node('docker') {
+        stage('Checkout AMD64') {
+            checkout scm
+        }
+
+        stage('Build AMD64') {
+            sh """
+            export DOCKER_CLI_EXPERIMENTAL="enabled"
+            docker --version
+
+            docker run --rm arm64v8/alpine ls
+            docker run --rm armhf/alpine ls
+
+            docker buildx create --use
+            docker buildx build --load --tag $testedImageName --platform linux/amd64 .
+            """
+        }
+
+        stage('Test image: standard use AMD64') {
             sh "docker run --rm -e ID=2831 -p 8080:8080 -e DO_BUILD=no $testedImageName"
         }
 
