@@ -1,21 +1,21 @@
-FROM openjdk:8-jdk
-MAINTAINER Baptiste Mathus <batmat@batmat.net>
+FROM adoptopenjdk:11-jdk-hotspot
+LABEL maintainer="Baptiste Mathus <batmat@batmat.net>"
 
 ARG MAVEN_VERSION=3.6.3
-RUN curl -Lf https://apache.osuosl.org/maven/maven-3/${MAVEN_VERSION}/binaries/apache-maven-${MAVEN_VERSION}-bin.tar.gz | tar -C /opt -xzv
+RUN curl -sLf https://apache.osuosl.org/maven/maven-3/${MAVEN_VERSION}/binaries/apache-maven-${MAVEN_VERSION}-bin.tar.gz | tar -C /opt -xz
 ENV M2_HOME /opt/apache-maven-$MAVEN_VERSION
 ENV maven.home $M2_HOME
 ENV M2 $M2_HOME/bin
 ENV PATH $M2:$PATH
 
-RUN apt-get install -y \
-                         git && \
-    apt-get clean
+RUN apt-get update && \
+  apt-get install -y git && \
+  apt-get clean
 
 # Cloning + "warming" up the maven local cache/repository for the latest Jenkins version
 RUN git clone https://github.com/jenkinsci/jenkins &&\
     cd jenkins && \
-    mvn clean package -DskipTests && \
+    mvn clean package -B --show-version --no-transfer-progress -DskipTests && \
     mvn clean
 
 WORKDIR jenkins
