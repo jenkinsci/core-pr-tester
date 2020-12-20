@@ -13,8 +13,10 @@ RUN apt-get update && \
   apt-get clean
 
 # Cloning + "warming" up the maven local cache/repository for the latest Jenkins version
-RUN git clone https://github.com/jenkinsci/jenkins &&\
+RUN git clone https://github.com/jenkinsci/jenkins && \
     cd jenkins && \
+    java -XshowSettings:properties -version 2>&1 | grep os.arch && \
+    java -XshowSettings:properties -version 2>&1 | grep os.version && \
     mvn clean package -B --show-version --no-transfer-progress -DskipTests && \
     mvn clean
 
