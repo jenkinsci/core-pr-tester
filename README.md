@@ -35,4 +35,4 @@ Like, for example, the Jenkins Maven dependencies both for 1.x and 2.x.
 That results in a *very* big layer especially for that part.
 
 The goal is that Maven has ideally to download no new dependency to build the requested
-pull request.
+pull request. 
