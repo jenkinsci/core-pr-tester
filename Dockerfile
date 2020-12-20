@@ -1,8 +1,8 @@
 FROM openjdk:8-jdk
 MAINTAINER Baptiste Mathus <batmat@batmat.net>
 
-ARG MAVEN_VERSION=3.6.0
-RUN curl -Lf http://central.maven.org/maven2/org/apache/maven/apache-maven/$MAVEN_VERSION/apache-maven-$MAVEN_VERSION-bin.tar.gz | tar -C /opt -xzv
+ARG MAVEN_VERSION=3.6.3
+RUN curl -Lf https://apache.osuosl.org/maven/maven-3/${MAVEN_VERSION}/binaries/apache-maven-${MAVEN_VERSION}-bin.tar.gz | tar -C /opt -xzv
 ENV M2_HOME /opt/apache-maven-$MAVEN_VERSION
 ENV maven.home $M2_HOME
 ENV M2 $M2_HOME/bin
@@ -15,7 +15,7 @@ RUN apt-get install -y \
 # Cloning + "warming" up the maven local cache/repository for the latest Jenkins version
 RUN git clone https://github.com/jenkinsci/jenkins &&\
     cd jenkins && \
-    mvn clean package -DskipTests dependency:go-offline && \
+    mvn clean package -DskipTests && \
     mvn clean
 
 WORKDIR jenkins
