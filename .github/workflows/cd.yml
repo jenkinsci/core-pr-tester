@@ -2,7 +2,7 @@ name: cd
  
 on:
   schedule:
-    - cron:  '0 0 * * Tue'
+    - cron:  '0 13 * * 1'
  push:
    branches: 'master'
  
