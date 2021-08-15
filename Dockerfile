@@ -1,7 +1,7 @@
 FROM adoptopenjdk:11-jdk-hotspot
 LABEL maintainer="Baptiste Mathus <batmat@batmat.net>"
 
-ARG MAVEN_VERSION=3.6.3
+ARG MAVEN_VERSION=3.8.2
 RUN curl -sLf https://apache.osuosl.org/maven/maven-3/${MAVEN_VERSION}/binaries/apache-maven-${MAVEN_VERSION}-bin.tar.gz | tar -C /opt -xz
 ENV M2_HOME /opt/apache-maven-$MAVEN_VERSION
 ENV maven.home $M2_HOME
