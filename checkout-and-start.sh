@@ -24,7 +24,7 @@ if [[ ${DO_BUILD:-yes} == "no" ]]; then ## Useful for testing
     exit 0
 fi
 
-mvn -V -pl war --also-make clean package -DskipTests -Dmaven.test.skip=true
+mvn --no-transfer-progress -V -pl war --also-make clean package -DskipTests -Dmaven.test.skip=true
 
 echo "Starting Jenkins"
 java -jar war/target/jenkins.war
