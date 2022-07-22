@@ -1,4 +1,4 @@
-FROM eclipse-temurin:11-jdk-focal
+FROM eclipse-temurin:18-jdk-focal
 
 ARG MAVEN_VERSION=3.8.6
 ARG TARGETARCH
