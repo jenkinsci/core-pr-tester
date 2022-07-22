@@ -9,3 +9,6 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
+    ignore:
+      # Kept in sync with the lowest Java version Jenkins can run on
+      - dependency-name: "eclipse-temurin"
