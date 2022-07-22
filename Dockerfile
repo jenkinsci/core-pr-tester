@@ -1,6 +1,6 @@
 FROM eclipse-temurin:11-jdk-focal
 
-ARG MAVEN_VERSION=3.8.4
+ARG MAVEN_VERSION=3.8.6
 ARG TARGETARCH
 #RUN curl -sLf https://apache.osuosl.org/maven/maven-3/${MAVEN_VERSION}/binaries/apache-maven-${MAVEN_VERSION}-bin.tar.gz | tar -C /opt -xz
 RUN curl -sLf https://archive.apache.org/dist/maven/maven-3/${MAVEN_VERSION}/binaries/apache-maven-${MAVEN_VERSION}-bin.tar.gz | tar -C /opt -xz
