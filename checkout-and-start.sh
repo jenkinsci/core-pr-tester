@@ -26,7 +26,7 @@ fi
 
 mvn --no-transfer-progress -V -pl war --also-make clean package -DskipTests -Dmaven.test.skip=true -P quick-build
 
-if [[ ${JENKINS_HOME:-} != "" ]]; then
+if [[ -n ${JENKINS_HOME-} ]]; then
     export JENKINS_HOME=$JENKINS_HOME
     echo "Jenkins home directory changed to $JENKINS_HOME"
 else
