@@ -26,5 +26,11 @@ fi
 
 mvn --no-transfer-progress -V -pl war --also-make clean package -DskipTests -Dmaven.test.skip=true -P quick-build
 
+if [[ -n ${JENKINS_HOME-} ]]; then
+    echo "Jenkins home directory changed to $JENKINS_HOME"
+else
+    echo "Using default home directory"
+fi
+
 echo "Starting Jenkins"
 java -jar war/target/jenkins.war
