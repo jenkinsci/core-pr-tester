@@ -12,6 +12,14 @@ Lets you test a pull-request on the Jenkins project in a clean environment.
 $ docker run --rm -ti -p 8080:8080 -e ID=2200 jenkins/core-pr-tester
 ```
 
+### How to change the Jenkins home directory
+
+The Jenkins home directory can be set with `JENKINS_HOME` as an environment variable.
+
+```shell
+$ docker run --rm -ti -p 8080:8080 -e ID=2200 -e JENKINS_HOME=/custom/directory/path jenkins/core-pr-tester
+```
+
 ### How to merge with `master` branch
 
 An additional environment variable `MERGE_WITH=` can be passed to merge the PR with any existing branch from the repository, before starting the build.
