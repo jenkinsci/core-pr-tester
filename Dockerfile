@@ -15,7 +15,7 @@ ENV M2 $M2_HOME/bin
 ENV PATH $M2:$PATH
 
 RUN apt-get update && \
-  apt-get install -y git gpg && \
+  apt-get install -y git gpg tini && \
   apt-get clean
 
 # Cloning + "warming" up the maven local cache/repository for the latest Jenkins version
@@ -28,17 +28,6 @@ RUN git clone https://github.com/jenkinsci/jenkins && \
 
 WORKDIR jenkins
 
-# Use tini as subreaper in Docker container to adopt zombie processes
-ARG TINI_VERSION=v0.19.0
-COPY tini_pub.gpg "/tmp/tini_pub.gpg"
-RUN curl -fsSL "https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini-static-${TARGETARCH}" -o /sbin/tini \
-  && curl -fsSL "https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini-static-${TARGETARCH}.asc" -o /sbin/tini.asc \
-  && gpg --no-tty --import "/tmp/tini_pub.gpg" \
-  && gpg --verify /sbin/tini.asc \
-  && rm -rf /sbin/tini.asc /root/.gnupg \
-  && rm -f /tmp/tini_pub.gpg \
-  && chmod +x /sbin/tini
-
 ADD checkout-and-start.sh /checkout-and-start.sh
 RUN chmod +x /checkout-and-start.sh
 
@@ -48,5 +37,5 @@ EXPOSE 8080
 RUN  git config --global user.email "core-pr-tester-noreply@jenkins.io" && \
      git config --global user.name "Core PR Tester"
 
-ENTRYPOINT ["/sbin/tini", "--", "/checkout-and-start.sh"]
+ENTRYPOINT ["/usr/bin/tini", "--", "/checkout-and-start.sh"]
 
