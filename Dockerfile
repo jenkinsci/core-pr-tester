@@ -1,4 +1,4 @@
-FROM eclipse-temurin:11-jdk-focal
+FROM eclipse-temurin:17-jdk-focal
 
 ARG MAVEN_VERSION=3.9.3
 # https://archive.apache.org/dist/maven/maven-3/3.9.3/binaries/apache-maven-3.9.3-bin.tar.gz.sha512
