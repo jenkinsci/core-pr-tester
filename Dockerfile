@@ -1,4 +1,4 @@
-FROM eclipse-temurin:17-jdk-focal
+FROM eclipse-temurin:21-jdk-jammy
 
 ARG MAVEN_VERSION=3.9.6
 # https://archive.apache.org/dist/maven/maven-3/3.9.6/binaries/apache-maven-3.9.6-bin.tar.gz.sha512
